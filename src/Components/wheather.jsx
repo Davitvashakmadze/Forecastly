@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./wheather.scss";
@@ -10,26 +9,28 @@ function Weather() {
   const [weatherData, setWeatherData] = useState(null);
   const [city, setCity] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // function to fetch weather data
   const fetchWeatherData = async () => {
     setIsLoading(true);
+    setError(null);
     try {
       const response = await axios.get(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=f4ae3de0bdc58aaca724764be343a043&units=metric`
       );
       setWeatherData(response.data);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
-      setIsLoading(false);
+      setError("NO DATA");
     }
+    setIsLoading(false);
   };
 
-  // useEffect hook to fetch data on component mount
+  // useEffect hook to fetch data on component mount and when city changes
   useEffect(() => {
     fetchWeatherData();
-  }, );
+  }, [city]);
 
   // function to handle form submission
   const handleSubmit = (e) => {
@@ -59,6 +60,8 @@ function Weather() {
           </form>
           {isLoading ? (
             <p>Loading...</p>
+          ) : error ? (
+            <p>{error}</p>
           ) : weatherData ? (
             <div>
               <h2>{weatherData.name}</h2>
