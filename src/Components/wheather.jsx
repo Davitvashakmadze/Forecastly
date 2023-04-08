@@ -2,6 +2,8 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
+import "./wheather.scss";
+import { Button, Input } from "reactstrap";
 
 function Weather() {
   // state variables
@@ -14,7 +16,6 @@ function Weather() {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        // `http://api.openweathermap.org/data/2.5/forecast?id=524901&appid={f4ae3de0bdc58aaca724764be343a043}`
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=f4ae3de0bdc58aaca724764be343a043&units=metric`
       );
       setWeatherData(response.data);
@@ -44,21 +45,31 @@ function Weather() {
   // render function
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input type="text" value={city} onChange={handleChange} />
-        <button type="submit">Get Weather</button>
-      </form>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : weatherData ? (
-        <div>
-          <h2>{weatherData.name}</h2>
-          <p>Temperature: {weatherData.main.temp} °C</p>
-          <p>Description: {weatherData.weather[0].description}</p>
+      <section className="wheather-section">
+        <div className="wheather-wrapper">
+          <h1>ამინდის პროგნოზი</h1>
+          <form onSubmit={handleSubmit}>
+            <Input
+              type="text"
+              placeholder="შეიყვანეთ ქალაქი"
+              value={city}
+              onChange={handleChange}
+            />
+            <Button type="submit">ძიება</Button>
+          </form>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : weatherData ? (
+            <div>
+              <h2>{weatherData.name}</h2>
+              <p>Temperature: {weatherData.main.temp} °C</p>
+              <p>Description: {weatherData.weather[0].description}</p>
+            </div>
+          ) : (
+            <p>No weather data</p>
+          )}
         </div>
-      ) : (
-        <p>No weather data</p>
-      )}
+      </section>
     </div>
   );
 }
