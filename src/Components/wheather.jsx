@@ -29,7 +29,7 @@ function Weather() {
   // useEffect hook to fetch data on component mount
   useEffect(() => {
     fetchWeatherData();
-  }, []);
+  }, );
 
   // function to handle form submission
   const handleSubmit = (e) => {
