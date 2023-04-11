@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import "./wheather.scss";
 import { Button, Input } from "reactstrap";
@@ -26,8 +26,6 @@ function Weather() {
     }
     setIsLoading(false);
   };
-
-
 
   // function to handle form submission
   const handleSubmit = (e) => {
