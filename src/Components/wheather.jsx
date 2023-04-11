@@ -27,10 +27,7 @@ function Weather() {
     setIsLoading(false);
   };
 
-  // useEffect hook to fetch data on component mount and when city changes
-  useEffect(() => {
-    fetchWeatherData();
-  }, [city]);
+
 
   // function to handle form submission
   const handleSubmit = (e) => {
